@@ -3,6 +3,8 @@ import math
 import sys
 # import time
 
+COEFF = 0.9999999999999999
+
 with open('./1_word.txt', 'r', encoding='utf-8') as f:
     pinyin_chinese_mapping = json.load(f)
     
@@ -27,11 +29,18 @@ def get_monogram_freq(pinyin, hanzi):
             expect = pinyin_chinese_mapping[pinyin]["counts"][i]
     return expect
 
-def calc_prob(freq, total):
+def calc_prob(freq, total, pinyin, hanzi):
     # Applies for all circumstances
+    # Another method of smoothing this curve: try adding a coefficient to the curve
+    # P(wi) is the probablity that the current letter occur
+    hanzi_prob = hanzi_log_prob_dict[pinyin][hanzi] / get_total_monogram(pinyin)
+    cond_prob = 0
     if total == 0 or freq == 0:
-        return 1000000000
-    return -math.log(freq / total)
+        cond_prob = 0
+    else:
+        cond_prob = freq / total
+
+    return -math.log(COEFF * cond_prob + (1 - COEFF) * hanzi_prob)
     
 def get_conditional_freq(first_pinyin, second_pinyin, first_hanzi, second_hanzi):
     # global func_time
@@ -77,7 +86,7 @@ def viterbi(sentence):
             total = get_total_monogram(sentence[i])
             for j in range(0, word_num):
                 freq = hanzi_log_prob_dict[sentence[i]][pinyin_chinese_mapping[sentence[i]]["words"][j]]
-                log_prob = calc_prob(freq, total) # Better memorize this number. 
+                log_prob = calc_prob(freq, total, sentence[i], pinyin_chinese_mapping[sentence[i]]["words"][j]) # Better memorize this number. 
                 letter = pinyin_chinese_mapping[sentence[i]]["words"][j]
                 viterbi_chart[i][letter] = [log_prob, ' ', 0]
             # zero_end_time = time.time()
@@ -97,7 +106,8 @@ def viterbi(sentence):
                     cond_freq = get_conditional_freq(sentence[i-1], 
                     sentence[i], k, pinyin_chinese_mapping[sentence[i]]["words"][j])
                     # in case that new_prob is 0
-                    calculated_prob = calc_prob(cond_freq, hanzi_log_prob_dict[sentence[i-1]][k])
+                    calculated_prob = calc_prob(cond_freq, hanzi_log_prob_dict[sentence[i-1]][k], 
+                    sentence[i], pinyin_chinese_mapping[sentence[i]]["words"][j])
                     new_val = calculated_prob + viterbi_chart[i - 1][k][0]
                     if new_val < 100000:
                         flag = 1
@@ -164,10 +174,10 @@ def preproceess():
 def main():
     # start_time = time.time()
     preproceess()
-    input_pinyin()
-    # with open('output.txt', 'w') as f:
-    #     sys.stdout = f
-    #     # start_time = time.time()
-    #     input_from_file()
-    #     sys.stdout = sys.__stdout__
+    # input_pinyin()
+    with open('output.txt', 'w') as f:
+        sys.stdout = f
+        # start_time = time.time()
+        input_from_file()
+        sys.stdout = sys.__stdout__
 main()
