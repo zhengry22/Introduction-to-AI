@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LocalDebuggerCommand>D:\Introduction_to_AI\HW3_Connect4\AI\Windows\Compete\bin\Compete.exe</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommandArguments>D:\Introduction_to_AI\HW3_Connect4\AI\Windows\TestCases\2.dll D:\Introduction_to_AI\HW3_Connect4\AI\Windows\Strategy\Strategy\Debug\Strategy.dll output.txt 3</LocalDebuggerCommandArguments>
+  </PropertyGroup>
+</Project>

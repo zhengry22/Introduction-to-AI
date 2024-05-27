@@ -1,0 +1,10 @@
+﻿  MCTS.h
+D:\Introduction_to_AI\HW3_Connect4\AI\Windows\Strategy\Strategy\MCTS.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+LINK : warning LNK4075: 忽略“/INCREMENTAL”(由于“/LTCG”规范)
+    正在创建库 D:\Introduction_to_AI\HW3_Connect4\AI\Windows\Strategy\Strategy\Debug\Strategy.lib 和对象 D:\Introduction_to_AI\HW3_Connect4\AI\Windows\Strategy\Strategy\Debug\Strategy.exp
+  正在生成代码
+  0 of 22 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  已完成代码的生成
+  Strategy.vcxproj -> D:\Introduction_to_AI\HW3_Connect4\AI\Windows\Strategy\Strategy\Debug\Strategy.dll
